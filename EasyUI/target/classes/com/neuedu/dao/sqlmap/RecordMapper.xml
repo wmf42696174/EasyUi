@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neuedu.dao.mapper.RecordMapper">
+
+    <insert id="AddRecord" parameterType="Record" >
+        INSERT INTO Record (id,gname,gprice,gnum,gsum,buyername,salename,times) VALUES (
+        #{id},
+        #{gname},
+        #{gprice},
+        #{gnum},
+        #{gsum},
+        #{buyername},
+        #{salename},
+        #{times}
+        )
+
+    </insert>
+    <select id="QueryRecordByBuyername" parameterType="java.util.Map" resultType="Record">
+        SELECT * FROM Record WHERE buyername=#{buyername}
+        <if test="begintime!=null and beigintime!=''">
+            AND times>#{begintime}
+        </if>
+        <if test="endtime!=null and endtime!=''">
+            <![CDATA[
+			and times<=#{endtime}
+		    ]]>
+        </if>
+        ORDER BY times DESC
+        limit #{page},#{rows}
+    </select>
+    <select id="QueryReCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(*) FROM Record WHERE buyername=#{buyername}
+        <if test="begintime!=null and beigintime!=''">
+            AND times>#{begintime}
+        </if>
+        <if test="endtime!=null and endtime!=''">
+            <![CDATA[
+			and times<=#{endtime}
+		    ]]>
+        </if>
+    </select>
+    <select id="QueryAllRecord" parameterType="java.util.Map" resultType="Record">
+        select * from Record WHERE 1=1
+        <if test="begintime!=null and beigintime!=''">
+            AND times>#{begintime}
+        </if>
+        <if test="endtime!=null and endtime!=''">
+            <![CDATA[
+			and times<=#{endtime}
+		    ]]>
+        </if>
+        limit #{page},#{rows}
+    </select>
+    <select id="QueryCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*) from Record WHERE 1=1
+        <if test="begintime!=null and beigintime!=''">
+            AND times>#{begintime}
+        </if>
+        <if test="endtime!=null and endtime!=''">
+            <![CDATA[
+			and times<=#{endtime}
+		    ]]>
+        </if>
+    </select>
+</mapper>

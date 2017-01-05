@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neuedu.dao.mapper.WantMapper">
+   <insert id="AddWant" parameterType="Want">
+       INSERT INTO want(id,buyername,goodname,price,description,wantnum) VALUES (
+       #{id},
+       #{buyername},
+       #{goodname},
+       #{price},
+       #{description},
+       #{wantnum}
+       )
+   </insert>
+    <select id="QueryAllWant" parameterType="java.util.Map" resultType="Want">
+        SELECT * FROM want WHERE 1=1
+        <if test="buyername!=null and buyername!=''">
+            AND buyername=#{buyername}
+        </if>
+        <if test="minprice!=null and minprice!=''">
+            <![CDATA[
+			and price>=#{minprice}
+		    ]]>
+        </if>
+        <if test="maxprice!=null and maxprice!=''">
+            <![CDATA[
+			and price<=#{maxprice}
+		    ]]>
+        </if>
+        limit #{page},#{rows}
+    </select>
+    <select id="QueryCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(*) FROM want WHERE 1=1
+        <if test="buyername!=null and buyername!=''">
+            AND buyername=#{buyername}
+        </if>
+        <if test="minprice!=null and minprice!=''">
+            <![CDATA[
+			and price>=#{minprice}
+		    ]]>
+        </if>
+        <if test="maxprice!=null and maxprice!=''">
+            <![CDATA[
+			and price<=#{maxprice}
+		    ]]>
+        </if>
+    </select>
+    <select id="QueryAllName" resultType="String">
+        SELECT DISTINCT buyername FROM want
+    </select>
+    <delete id="DeleteWantById" parameterType="java.lang.String">
+        DELETE FROM want WHERE id=#{id}
+    </delete>
+    <update id="ChangeWant" parameterType="Want">
+        UPDATE want set
+        goodname=#{goodname},
+        price=#{price},
+        wantnum=#{wantnum},
+        description=#{description}
+        WHERE id=#{id}
+    </update>
+</mapper>
