@@ -120,4 +120,7 @@
     <delete id="DeleteGoodsById" parameterType="java.lang.String">
         DELETE FROM Goods WHERE id=#{id}
     </delete>
+    <select id="QueryShowGoods" resultType="Goods">
+        select * from  Goods;
+    </select>
 </mapper>

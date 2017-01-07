@@ -61,4 +61,7 @@ public class GoodsService {
     public int DeleteGoodsById(String id){
         return goodsMapper.DeleteGoodsById(id);
     }
+    public List<Goods> QueryShowGoods(){
+        return goodsMapper.QueryShowGoods();
+    }
 }

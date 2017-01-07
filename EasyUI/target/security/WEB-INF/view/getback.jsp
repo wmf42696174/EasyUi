@@ -22,7 +22,7 @@
     <p><input type="text" placeholder="请输入验证码" id="yan"/><a href="javascript:void(0)" class="get">找回</a></p>
     <p class="password tishi">您的密码为</p>
     <p class="password pass">20144596</p>
-    <p class="password"><a href="/sys/log/back" class="login">返回登陆</a></p>
+    <p class="password"><a href="../user/login" class="login">返回登陆</a></p>
 </div>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script>

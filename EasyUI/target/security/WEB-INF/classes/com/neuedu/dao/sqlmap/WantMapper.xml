@@ -58,4 +58,7 @@
         description=#{description}
         WHERE id=#{id}
     </update>
+    <select id="QueryShowWant" parameterType="Want" resultType="Want">
+        SELECT * FROM want
+    </select>
 </mapper>

@@ -37,4 +37,6 @@ public interface GoodsMapper {
     public int QueryFlagedCount(Map<String,Object> map);
 
     public int DeleteGoodsById(String id);
+
+    public List<Goods>QueryShowGoods();
 }

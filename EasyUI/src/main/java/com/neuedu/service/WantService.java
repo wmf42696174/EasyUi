@@ -40,4 +40,7 @@ public class WantService {
     public int ChangeWant(Want want){
         return wantMapper.ChangeWant(want);
     }
+    public List<Want> QueryShowWant(Want want){
+        return wantMapper.QueryShowWant(want);
+    }
 }

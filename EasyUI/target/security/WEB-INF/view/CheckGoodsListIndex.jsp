@@ -142,7 +142,7 @@
         $("#CheckGoodsTable").datagrid('selectRow',index);
          console.info(index);
         var rows = $("#CheckGoodsTable").datagrid("getSelections");
-        $.messager.confirm("温馨提示","确定通过该商品的审核",function (result) {
+        $.messager.confirm("温馨提示","确定不通过该商品的审核",function (result) {
             if(result){
                 var ps="?id="+rows[0].id+"&flag=2";
                 $.post('../goods/Check'+ps,function (data) {
@@ -156,7 +156,7 @@
         $("#CheckGoodsTable").datagrid('selectRow',index);
         console.info(index);
         var rows = $("#CheckGoodsTable").datagrid("getSelections");
-        $.messager.confirm("温馨提示","确定不通过该商品的审核",function (result) {
+        $.messager.confirm("温馨提示","确定通过该商品的审核",function (result) {
             if(result){
                 console.info(rows.length);
                 var ps="";

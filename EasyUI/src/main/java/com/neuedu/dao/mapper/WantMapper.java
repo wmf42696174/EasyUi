@@ -17,4 +17,5 @@ public interface WantMapper {
     public int QueryCount(Map<String, Object> parameter);
     public int DeleteWantById(String id);
     public int ChangeWant(Want want);
+    public List<Want> QueryShowWant(Want want);
 }

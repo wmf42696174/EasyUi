@@ -184,32 +184,56 @@ public class UserController {
     }
 
     @RequestMapping(value = "/regist",method = {RequestMethod.GET,RequestMethod.POST})
-    public String Regist(){
-        return "regist";
+    public ModelAndView Regist(@RequestParam(value = "error",required = false)String error){
+        ModelAndView mv=new ModelAndView("regist");
+        mv.addObject("error",error);
+        return mv;
     }
     @RequestMapping(value = "AddUser",method = {RequestMethod.POST,RequestMethod.GET})
-    public ModelAndView AddUser(@ModelAttribute("user")User user){
+    public ModelAndView AddUser(@ModelAttribute("user")User user,
+                                @RequestParam("index")String index){
         System.out.println("asdasdsad哈"+user.toString());
         User checkUSer=userService.CheckUser(user.getUserName());
         ModelAndView mv=new ModelAndView();
-        if(checkUSer!=null){
-            mv.addObject("error","fail");
+        if(index.equals("index")){
+            if(checkUSer!=null){
+                mv.addObject("error","fail");
+                mv.setViewName("redirect:/user/regist");
+                return mv;
+            }
+            String s= UUID.randomUUID().toString();
+            String id=s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24);
+            user.setId(id);
+            if(user.getType().equals("卖方")){
+                user.setRole("ROLE_USER");
+            }
+            else{
+                user.setRole("ROLE_SALE");
+            }
+            mv.setViewName("redirect:/user/login");
+            userService.AddUser(user);
+            return mv;
+        }else{
+
+            if(checkUSer!=null){
+                mv.addObject("error","fail");
+                mv.setViewName("redirect:/user/list");
+                return mv;
+            }
+            mv.addObject("error", "success");
+            String s= UUID.randomUUID().toString();
+            String id=s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24);
+            user.setId(id);
+            if(user.getType().equals("卖方")){
+                user.setRole("ROLE_USER");
+            }
+            else{
+                user.setRole("ROLE_SALE");
+            }
             mv.setViewName("redirect:/user/list");
+            userService.AddUser(user);
             return mv;
         }
-        mv.addObject("error", "success");
-        String s= UUID.randomUUID().toString();
-        String id=s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24);
-        user.setId(id);
-        if(user.getType().equals("卖方")){
-            user.setRole("ROLE_USER");
-        }
-        else{
-            user.setRole("ROLE_SALE");
-        }
-        mv.setViewName("redirect:/user/list");
-        userService.AddUser(user);
-        return mv;
     }
 
     @RequestMapping(value = "getback",method = {RequestMethod.GET,RequestMethod.POST})
@@ -234,10 +258,7 @@ public class UserController {
         }
         return null;
     }
-    @RequestMapping(value = "show")
-    public String Show(){
-        return "homePage";
-    }
+
     @RequestMapping(value = "querylist",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public Map<String,Object> querylist(@RequestParam("page")int page,

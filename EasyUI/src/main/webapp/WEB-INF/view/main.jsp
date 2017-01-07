@@ -116,7 +116,7 @@
         <div class="easyui-tabs" id="tt" data-options="region:'center',fit:true,border:false,closable:true">
            <div title="首页">
                <iframe style="width: 100%; height: 100%;" frameborder="0"
-                       src="../user/show"></iframe>
+                       src="../want/show"></iframe>
            </div>
         </div>
 

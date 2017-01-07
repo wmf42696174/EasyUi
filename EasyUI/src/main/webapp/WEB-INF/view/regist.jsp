@@ -75,7 +75,7 @@
    <div class="box">
        <h1>用户注册</h1>
        <div style="display: none;" class="msg">${error}</div>
-       <form method="post" action="../user/AddUser" id="MyForm">
+       <form method="post" action="../user/AddUser?index=index" id="MyForm">
        <p>
            <span>用户名:</span>
            <input type="text" name="userName" id="userName" />

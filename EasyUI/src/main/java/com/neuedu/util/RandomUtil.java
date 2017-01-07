@@ -1,5 +1,7 @@
 package com.neuedu.util;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -7,10 +9,11 @@ import java.util.Random;
 /**
  * Created by Administrator on 2016-12-28.
  */
+@Repository
 public class RandomUtil {
 
 
-    public static List<Integer> getNumer(int max){
+    public  List<Integer> getNumer(int max){
         Random r = new Random();
         List<Integer> list = new ArrayList<Integer>();
         int i;

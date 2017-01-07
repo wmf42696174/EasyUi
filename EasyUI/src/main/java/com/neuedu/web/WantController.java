@@ -1,7 +1,10 @@
 package com.neuedu.web;
 
+import com.neuedu.bean.Goods;
 import com.neuedu.bean.Want;
+import com.neuedu.service.GoodsService;
 import com.neuedu.service.WantService;
+import com.neuedu.util.RandomUtil;
 import com.sun.javafx.sg.PGShape;
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
@@ -24,7 +27,10 @@ public class WantController {
 
     @Autowired
     private WantService wantService;
-
+    @Autowired
+    private RandomUtil randomUtil;
+    @Autowired
+    private GoodsService goodsService;
     @RequestMapping(value = "addwant",method = {RequestMethod.GET,RequestMethod.POST})
     public String AddWant(){
         return "AddWantPopWindow";
@@ -58,6 +64,32 @@ public class WantController {
         return mv;
     }
 
+    @RequestMapping(value = "show",method = {RequestMethod.GET,RequestMethod.POST})
+    public ModelAndView Show()
+    {
+        ModelAndView mv=new ModelAndView();
+        Want want=new Want();
+        List<Want> showWantList=new ArrayList<Want>();
+        List<Want> wantList=wantService.QueryShowWant(want);
+        List<Goods> goodsList=goodsService.QueryShowGoods();
+        List<Goods> showGoodsList=new ArrayList<Goods>();
+        List<Integer> a=randomUtil.getNumer(wantList.size());
+        Want temp;
+        for(int i=0;i<5;i++){
+            temp=wantList.get(a.get(i));
+            showWantList.add(temp);
+        }
+        List<Integer> b=randomUtil.getNumer(goodsList.size());
+        Goods tempGoods;
+        for(int i=0;i<5;i++){
+            tempGoods=goodsList.get(a.get(i));
+            showGoodsList.add(tempGoods);
+        }
+        mv.addObject("showWantList",showWantList);
+        mv.addObject("showGoodsList",showGoodsList);
+        mv.setViewName("homePage");
+        return mv;
+    }
     @RequestMapping(value = "querymywantlist",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public Map<String,Object> queryMywantlist( @RequestParam(value = "minprice",required = false)String minprice,
